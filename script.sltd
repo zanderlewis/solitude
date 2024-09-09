@@ -1,0 +1,20 @@
+. Solitude supports variables.
+var a=Hello
+var b=World
+var c=3
+
+. Solitude also supports redefining variables.
+var c=$a
+
+. Printing has no function, just type what you want to print, with `$` before the variable name.
+`c` is $c
+
+. You can also get user input.
+input name -> Type your name: 
+
+. ANSI escape codes are supported.
+Hello, \033[1m$name\033[0m!
+
+. You can also define functions.
+func greet Hello, $b!
+call greet
