@@ -1,5 +1,5 @@
 # Solitude
-Simple programming language for beginners.
+Simple programming language that supports threading.
 
 ## Table of Contents
 - [Solitude](#solitude)
@@ -21,12 +21,11 @@ Simple programming language for beginners.
 ```bash
 git clone https://github.com/zanderlewis/solitude.git
 cd solitude
-gcc -o solitude solitude.c
 ```
 
 ## Usage
 ```bash
-./solitude <filename>
+cargo run <filename>
 ```
 
 ## Example
@@ -77,7 +76,7 @@ $x
 - Simple syntax
 - Easy to learn
 - Small codebase
-- Written in C
+- Written in Rust
 
 ## License
 Solitude is licensed under the [APACHE-2.0](https://www.apache.org/licenses/LICENSE-2.0) license. Please see the [`LICENSE`](LICENSE) file for more information.

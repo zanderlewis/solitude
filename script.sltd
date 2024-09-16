@@ -7,19 +7,38 @@ var c=3
 var c=$a
 
 . Printing has no function, just type what you want to print, with `$` before the variable name.
-`c` is $c
+`c` is $c\n
 
 . You can also get user input.
-input name -> Type your name: 
+input name -> Type your name:\x20
 
 . ANSI escape codes are supported.
-Hello, \033[1m$name\033[0m!
+Hello, \033[1m$name\033[0m!\n
 
 . You can also define functions.
-func greet Hello, $b!
+func greet
+Hello, $b!\n
+cnuf
 
-var c=3
+var c=2
 
 . You can also use if statements.
-if $c>2
+if $c>=2
 call greet
+fi
+
+. Solitude also supports threading.
+func a
+\n
+Hello, there!
+\n\n
+cnuf
+
+func b
+Hello, there!\n
+cnuf
+
+!!
+call a
+call b
+??
