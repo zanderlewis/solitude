@@ -1,0 +1,10 @@
+[package]
+name = "solitude"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+
+[[bin]]
+name = "solitude"
+path = "src/solitude.rs"

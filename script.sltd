@@ -17,4 +17,9 @@ Hello, \033[1m$name\033[0m!
 
 . You can also define functions.
 func greet Hello, $b!
+
+var c=3
+
+. You can also use if statements.
+if $c>2
 call greet
