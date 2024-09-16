@@ -90,6 +90,8 @@ call func2
 - Simple syntax
 - Easy to learn
 - Small codebase
+- Fast
+- Built-in threading
 - Written in Rust
 
 ## License
