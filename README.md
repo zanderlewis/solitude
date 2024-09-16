@@ -14,6 +14,7 @@ Simple programming language that supports threading.
     - [Functions](#functions)
     - [Comments](#comments)
     - [User Input](#user-input)
+    - [Threading](#threading)
   - [Features](#features)
   - [License](#license)
 
@@ -30,7 +31,7 @@ cargo run <filename>
 
 ## Example
 ```solitude
-x=5
+var x=5
 The value of x is: $x
 ```
 
@@ -53,11 +54,15 @@ $x
 ```solitude
 if x>5
 x is greater than 5
+fi
 ```
 
 ### Functions
 ```solitude
-func greet Hello!
+func greet
+Hello!
+cnuf
+
 call greet
 ```
 
@@ -68,8 +73,17 @@ call greet
 
 ### User Input
 ```solitude
-input x Enter a number for x:
+. The \x20 is a space character
+input x -> Enter a number for x:\x20
 $x
+```
+
+### Threading
+```solitude
+!!
+call func1
+call func2
+??
 ```
 
 ## Features
@@ -79,4 +93,4 @@ $x
 - Written in Rust
 
 ## License
-Solitude is licensed under the [APACHE-2.0](https://www.apache.org/licenses/LICENSE-2.0) license. Please see the [`LICENSE`](LICENSE) file for more information.
+Solitude is licensed under the [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0) license. Please see the [`LICENSE`](LICENSE) file for more information.
