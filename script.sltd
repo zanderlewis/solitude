@@ -3,6 +3,11 @@ var a=Hello
 var b=World
 var c=3
 
+...
+Here is a multiline comment.
+The dots must be on their own line.
+...
+
 . Solitude also supports redefining variables.
 var c=$a
 

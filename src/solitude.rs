@@ -24,6 +24,18 @@ impl Interpreter {
 
         while i < lines.len() {
             let line = lines[i].trim();
+            // Multi-line comments are three dots on a line by themselves
+            if line == "..." {
+                i += 1;
+                while i < lines.len() {
+                    if lines[i].trim() == "..." {
+                        i += 1;
+                        break;
+                    }
+                    i += 1;
+                }
+                continue;
+            }
             if line.is_empty() || line.starts_with('.') {
                 i += 1;
                 continue; // Comment or blank line
