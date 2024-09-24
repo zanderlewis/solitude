@@ -9,6 +9,12 @@ var c=$a
 . Printing has no function, just type what you want to print, with `$` before the variable name.
 `c` is $c\n
 
+. You can also remove variables.
+-c
+
+. Calling a non-existent variable will result in an error.
+`c` is $c\n
+
 . You can also get user input.
 input name -> Type your name:\x20
 
@@ -39,6 +45,10 @@ Hello, there!\n
 cnuf
 
 !!
+{
 call a
+}
+{
 call b
+}
 ??

@@ -40,8 +40,21 @@ impl Interpreter {
                         i += 1; // Skip the `??` line
                         break;
                     }
-                    thread_lines.push(lines[i].clone());
-                    i += 1;
+                    if thread_line.starts_with('{') {
+                        i += 1; // Skip the `{` line
+                        while i < lines.len() {
+                            let block_line = lines[i].trim();
+                            if block_line.starts_with('}') {
+                                i += 1; // Skip the `}` line
+                                break;
+                            }
+                            thread_lines.push(lines[i].clone());
+                            i += 1;
+                        }
+                    } else {
+                        thread_lines.push(lines[i].clone());
+                        i += 1;
+                    }
                 }
 
                 let handle = thread::spawn(move || {
