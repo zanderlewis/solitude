@@ -1,7 +1,10 @@
 # [ GENERAL ] #
 solitude
+
+# [ RUST ] #
 target
 Cargo.lock
+rustc-*.txt
 
 # [ OS ] #
 .DS_Store
