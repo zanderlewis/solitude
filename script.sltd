@@ -17,10 +17,10 @@ var c=$a
 . You can also remove variables.
 -c
 
-. Calling a non-existent variable will result in an error.
-`c` is $c\n
-
-. You can also get user input.
+...
+You can also get user input.
+The `\x20` is a space character.
+...
 input name -> Type your name:\x20
 
 . ANSI escape codes are supported.
@@ -28,32 +28,33 @@ Hello, \033[1m$name\033[0m!\n
 
 . You can also define functions.
 func greet
-Hello, $b!\n
+    Hello, $b!\n
 cnuf
 
 var c=2
 
 . You can also use if statements.
 if $c>=2
-call greet
+    call greet
 fi
 
 . Solitude also supports threading.
 func a
-\n
-Hello, there!
-\n\n
+    \n
+    Hello from function "a"!
+    \n\n
 cnuf
 
 func b
-Hello, there!\n
+    Hello from function "b"!\n
 cnuf
 
 !!
-{
-call a
-}
-{
-call b
-}
+    {
+        call a
+        call a
+    }
+    {
+        call b
+    }
 ??

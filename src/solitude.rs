@@ -5,6 +5,9 @@ use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use std::thread;
 
+mod syntax;
+use syntax::*;
+
 struct Interpreter {
     vars: Arc<Mutex<HashMap<String, String>>>,
     funcs: Arc<Mutex<HashMap<String, Vec<String>>>>,
@@ -25,10 +28,10 @@ impl Interpreter {
         while i < lines.len() {
             let line = lines[i].trim();
             // Multi-line comments are three dots on a line by themselves
-            if line == "..." {
+            if line == ML_COMMENT {
                 i += 1;
                 while i < lines.len() {
-                    if lines[i].trim() == "..." {
+                    if lines[i].trim() == ML_COMMENT {
                         i += 1;
                         break;
                     }
@@ -36,27 +39,27 @@ impl Interpreter {
                 }
                 continue;
             }
-            if line.is_empty() || line.starts_with('.') {
+            if line.is_empty() || line.starts_with(SL_COMMENT) {
                 i += 1;
                 continue; // Comment or blank line
             }
 
-            if line.starts_with("!!") {
+            if line.starts_with(THREAD_OUTSIDE_BEGIN) {
                 let interpreter = self.clone();
                 let mut thread_lines = vec![];
                 i += 1; // Skip the `!!` line
 
                 while i < lines.len() {
                     let thread_line = lines[i].trim();
-                    if thread_line.starts_with("??") {
+                    if thread_line.starts_with(THREAD_OUTSIDE_END) {
                         i += 1; // Skip the `??` line
                         break;
                     }
-                    if thread_line.starts_with('{') {
+                    if thread_line.starts_with(THREAD_INSIDE_BEGIN) {
                         i += 1; // Skip the `{` line
                         while i < lines.len() {
                             let block_line = lines[i].trim();
-                            if block_line.starts_with('}') {
+                            if block_line.starts_with(THREAD_INSIDE_END) {
                                 i += 1; // Skip the `}` line
                                 break;
                             }
@@ -89,21 +92,21 @@ impl Interpreter {
 
     fn process_line(&self, lines: &Vec<String>, i: &mut usize) {
         let line = lines[*i].trim();
-        if line.is_empty() || line.starts_with('.') {
+        if line.is_empty() || line.starts_with(SL_COMMENT) {
             return; // Comment or blank line
         }
 
-        if line.starts_with("var ") {
+        if line.starts_with(VAR_DECLARE) {
             self.process_var_declaration(&line[4..]);
-        } else if line.starts_with('-') {
+        } else if line.starts_with(VAR_DELETE) {
             self.delete_var(&line[1..]);
-        } else if line.starts_with("if ") {
+        } else if line.starts_with(IF_BEGIN) {
             *i += 1;
             if self.process_if_statement(&line[3..]) {
                 let mut if_lines = vec![];
                 while *i < lines.len() {
                     let if_line = lines[*i].trim();
-                    if if_line.starts_with("fi") {
+                    if if_line.starts_with(IF_END) {
                         *i += 1;
                         break;
                     }
@@ -114,18 +117,18 @@ impl Interpreter {
             } else {
                 while *i < lines.len() {
                     let if_line = lines[*i].trim();
-                    if if_line.starts_with("fi") {
+                    if if_line.starts_with(IF_END) {
                         *i += 1;
                         break;
                     }
                     *i += 1;
                 }
             }
-        } else if line.starts_with("func ") {
+        } else if line.starts_with(FUNC_BEGIN) {
             self.define_function(&lines, i);
-        } else if line.starts_with("call ") {
+        } else if line.starts_with(FUNC_CALL) {
             self.execute_function(&line[5..]);
-        } else if line.starts_with("input ") {
+        } else if line.starts_with(INPUT_VAR) {
             self.input_variable(&line[6..]);
         } else {
             let mut output = line.to_string();
@@ -176,7 +179,7 @@ impl Interpreter {
             *i += 1;
             while *i < lines.len() {
                 let func_line = lines[*i].trim();
-                if func_line.starts_with("cnuf") {
+                if func_line.starts_with(FUNC_END) {
                     *i += 1;
                     break;
                 }
@@ -212,7 +215,7 @@ impl Interpreter {
         let mut var_mode = false;
 
         for c in s.chars() {
-            if c == '$' {
+            if c == VAR_GET {
                 var_mode = true;
             } else if var_mode && (c.is_alphanumeric() || c == '_') {
                 var_name.push(c);
@@ -364,7 +367,7 @@ impl Interpreter {
     }
 
     fn input_variable(&self, prompt: &str) {
-        let parts: Vec<&str> = prompt.split("->").collect();
+        let parts: Vec<&str> = prompt.split(INPUT_VAR_SPLIT).collect();
         let name = parts[0].trim();
         let mut message = if parts.len() == 2 { parts[1].trim().to_string() } else { "Enter value: ".to_string() };
     
